@@ -21,6 +21,15 @@ class TestPages(unittest.TestCase):
         page = MainPage(self.driver)
         self.assertTrue(page.check_page_loaded())
 
+    def test_qa_link(self):
+        print "\n" + str(test_cases(2))
+        self.driver.get("http://www.uptake.com/jobs/")
+        page = MainPage(self.driver)
+        self.driver.implicitly_wait(20)  # seconds
+        clickQaLink = page.click_qa_link()
+        self.assertIn("?gh_jid=159311", clickQaLink)
+        #self.assertIn("?gh_jid=159311", clickQaLink.get_url())
+
     def test_join_us_button(self):
         print "\n" + str(test_cases(1))
         page = MainPage(self.driver)
@@ -28,18 +37,11 @@ class TestPages(unittest.TestCase):
         joinUsPage = page.click_join_us_button()
         self.assertIn("/jobs", joinUsPage.get_url())
 
-    def test_qa_link(self):
-        print "\n" + str(test_cases(2))
-        self.driver.get("http://www.uptake.com/jobs/")
-        page = MainPage(self.driver)
-        self.driver.implicitly_wait(20)  # seconds
-        clickQaLink = page.click_qa_link()
-        self.assertIn("?gh_jid=159311", clickQaLink.get_url())
-
-
 
     def tearDown(self):
         self.driver.close()
+
+
 
 if __name__ == "__main__":
     suite = unittest.TestLoader().loadTestsFromTestCase(TestPages)
